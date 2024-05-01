@@ -4,9 +4,21 @@ def sudoku_matrix_generator():
             yield y, x
 
 
-def reset_possible_numbers():
-    arr_possible_numbers = [[[1, 2, 3, 4, 5, 6, 7, 8, 9] for y in range(0, 9)] for x in range(0, 9)]
-    print(arr_possible_numbers)
+def reset_possible_numbers(grid: list):
+    return [[[1, 2, 3, 4, 5, 6, 7, 8, 9] if grid[y][x] == 0 else [] for y in range(0, 9)] for x in range(0, 9)]
+
+
+def pretty_print_sudoku(grid: list) -> None:
+    for y in range(9):
+        for x in range(9):
+            if x % 3 == 0 and x != 0 and x != 8:
+                print("| ", end="")
+            print(grid[y][x], end=" ")
+        if y % 3 == 2 and y != 0 and y != 8:
+            print("\n- - - + - - - + - - -", end="")
+
+        print()
+
 
 
 if __name__ == "__main__":
@@ -20,4 +32,5 @@ if __name__ == "__main__":
             [9, 0, 0, 8, 0, 4, 0, 3, 0],
             [6, 0, 0, 3, 0, 1, 0, 0, 0]]
 
-    reset_possible_numbers()
+    reset_possible_numbers(grid)
+    pretty_print_sudoku(grid)
