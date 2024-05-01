@@ -58,6 +58,7 @@ def set_single_possible_number(grid: list, possible_nr: list):
             continue
         if len(possible_nr[y][x]) == 1:
             grid[y][x] = possible_nr[y][x][0]
+            possible_nr[y][x] = []
 
 
 def pretty_print_sudoku(grid: list) -> None:
