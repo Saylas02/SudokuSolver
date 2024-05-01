@@ -52,6 +52,30 @@ def check_blocks(grid: list, arr_pos_nr: list):
     return
 
 
+def check_unions(grid: list, possible_nr: list):
+    patterns = [
+        [[(0,0),(0,1),(1,0),(1,1),  (0,7),(0,8),(1,7),(1,8),    (7,0),(7,1),(8,0),(8,1),    (7,7),(7,8),(8,7),(8,8)],
+        [(2,2),(2,3),(2,4),(2,5),(2,6), (6,2),(6,3),(6,4),(6,5),(6,6),  (3,2),(4,2),(5,2),  (3,6),(4,6),(5,6)]],
+    ]
+    allDigitsSet = {1,2,3,4,5,6,7,8,9}
+    
+    for pattern in patterns:
+        blue_pattern, purple_pattern = pattern[0], pattern[1]
+        blue_set, purple_set = set(), set()
+        
+        for y,x in blue_pattern:
+            blue_set = blue_set.union(set(possible_nr[y][x])).union(set([grid[y][x]]))
+            
+        for y,x in purple_pattern:
+            purple_set = purple_set.union(set(possible_nr[y][x])).union(set([grid[y][x]]))
+            
+        left_possibleNums = allDigitsSet.difference(blue_set.intersection(purple_set))
+        
+        for y,x in (blue_pattern + purple_pattern):
+            for l in left_possibleNums:
+                if l in possible_nr[y][x]:
+                    possible_nr[y][x].remove(l)
+
 def set_single_possible_number(grid: list, possible_nr: list):
     for y, x in sudoku_matrix_generator():
         if grid[y][x] != 0:
@@ -85,26 +109,35 @@ def solve(grid: list):
     pretty_print_sudoku(grid)
     count = 1
     while not is_solved(grid):
+        #Reset Setup
         possible_nr = reset_possible_numbers(grid)
+        
+        #Sort out not possible Numbers
         check_rows(grid, possible_nr)
         check_columns(grid, possible_nr)
         check_blocks(grid, possible_nr)
+        check_unions(grid, possible_nr)
+        
+        #Set safe numbers
         set_single_possible_number(grid, possible_nr)
+        
+        #Other Stuff
         print(f"Iteration: {count}")
         pretty_print_sudoku(grid)
         count += 1
-    print(f"Solved with {count} iterations")
+
+    print(f"Solved with {count-1} iterations")
 
 
 if __name__ == "__main__":
-    board = [[1, 0, 0, 6, 4, 5, 9, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 5, 9, 7, 0, 2, 0, 1, 0],
-             [0, 0, 4, 0, 1, 0, 0, 0, 5],
-             [0, 8, 0, 5, 0, 0, 0, 0, 3],
-             [0, 6, 7, 0, 0, 0, 0, 8, 0],
-             [0, 3, 8, 0, 5, 6, 0, 2, 7],
-             [9, 0, 0, 8, 0, 4, 0, 3, 0],
-             [6, 0, 0, 3, 0, 1, 0, 0, 0]]
+    board = [[3,4,5,0,0,0,0,0,8],
+             [6,1,0,0,8,3,5,4,9],
+             [7,9,0,0,4,5,0,0,6],
+             [0,0,0,1,5,7,0,0,0],
+             [0,0,0,0,6,4,9,0,0],
+             [0,7,1,9,0,0,4,0,0],
+             [0,0,9,0,2,0,6,0,4],
+             [0,5,0,0,1,0,0,0,0],
+             [2,0,6,0,0,0,3,0,0]]
 
     solve(board)

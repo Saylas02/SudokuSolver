@@ -1,6 +1,4 @@
-arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+test1 = {1,2,3,4,5}
+test2 = {3,4,5,6,7}
 
-arr.remove(9)
-arr.remove(9)
-
-print(arr)
+print(test1.intersection(test2))
