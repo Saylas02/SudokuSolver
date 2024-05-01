@@ -52,6 +52,14 @@ def check_blocks(grid: list, arr_pos_nr: list):
     return
 
 
+def set_single_possible_number(grid: list, possible_nr: list):
+    for y, x in sudoku_matrix_generator():
+        if grid[y][x] != 0:
+            continue
+        if len(possible_nr[y][x]) == 1:
+            grid[y][x] = possible_nr[y][x][0]
+
+
 def pretty_print_sudoku(grid: list) -> None:
     for y in range(9):
         for x in range(9):
@@ -61,6 +69,7 @@ def pretty_print_sudoku(grid: list) -> None:
         if y % 3 == 2 and y != 0 and y != 8:
             print("\n- - - + - - - + - - -", end="")
         print()
+    print()
     return
 
 
@@ -73,12 +82,17 @@ def is_solved(grid: list) -> bool:
 
 def solve(grid: list):
     pretty_print_sudoku(grid)
+    count = 1
     while not is_solved(grid):
         possible_nr = reset_possible_numbers(grid)
         check_rows(grid, possible_nr)
         check_columns(grid, possible_nr)
         check_blocks(grid, possible_nr)
+        set_single_possible_number(grid, possible_nr)
+        print(f"Iteration: {count}")
         pretty_print_sudoku(grid)
+        count += 1
+    print(f"Solved with {count} iterations")
 
 
 if __name__ == "__main__":
