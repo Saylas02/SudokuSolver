@@ -61,6 +61,14 @@ def pretty_print_sudoku(grid: list) -> None:
         if y % 3 == 2 and y != 0 and y != 8:
             print("\n- - - + - - - + - - -", end="")
         print()
+    return
+
+
+def is_solved(grid: list) -> bool:
+    for y, x in sudoku_matrix_generator():
+        if grid[y][x] == 0:
+            return False
+    return True
 
 
 if __name__ == "__main__":
@@ -79,4 +87,4 @@ if __name__ == "__main__":
     check_rows(board, possible_nr)
     check_columns(board, possible_nr)
     check_blocks(board, possible_nr)
-    print(possible_nr)
+    is_solved(board)
