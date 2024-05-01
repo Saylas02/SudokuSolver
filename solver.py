@@ -71,6 +71,16 @@ def is_solved(grid: list) -> bool:
     return True
 
 
+def solve(grid: list):
+    pretty_print_sudoku(grid)
+    while not is_solved(grid):
+        possible_nr = reset_possible_numbers(grid)
+        check_rows(grid, possible_nr)
+        check_columns(grid, possible_nr)
+        check_blocks(grid, possible_nr)
+        pretty_print_sudoku(grid)
+
+
 if __name__ == "__main__":
     board = [[1, 0, 0, 6, 4, 5, 9, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -82,9 +92,4 @@ if __name__ == "__main__":
              [9, 0, 0, 8, 0, 4, 0, 3, 0],
              [6, 0, 0, 3, 0, 1, 0, 0, 0]]
 
-    possible_nr = reset_possible_numbers(board)
-    pretty_print_sudoku(board)
-    check_rows(board, possible_nr)
-    check_columns(board, possible_nr)
-    check_blocks(board, possible_nr)
-    is_solved(board)
+    solve(board)
