@@ -8,21 +8,29 @@ def reset_possible_numbers(grid: list):
     return [[[1, 2, 3, 4, 5, 6, 7, 8, 9] if grid[y][x] == 0 else [] for x in range(0, 9)] for y in range(0, 9)]
 
 
-def check_row(grid: list, arr_pos_nr: list):
+def check_rows(grid: list, arr_pos_nr: list):
     for y, x in sudoku_matrix_generator():
         if grid[y][x] != 0:
             continue
         for i in range(9):
-            if grid[y][i] != 0:
+            if grid[y][i] != 0 and grid[y][i] in arr_pos_nr[y][x]:
                 arr_pos_nr[y][x].remove(grid[y][i])
     return
 
 
-def check_column(grid: list, arr_pos_nr: list):
+def check_columns(grid: list, arr_pos_nr: list):
+    for y, x in sudoku_matrix_generator():
+        if grid[y][x] != 0:
+            continue
+        for i in range(9):
+            if grid[i][x] != 0 and grid[i][x] in arr_pos_nr[y][x]:
+                arr_pos_nr[y][x].remove(grid[i][x])
     return
 
 
-def check_block(grid: list, arr_pos_nr: list):
+def check_blocks(grid: list, arr_pos_nr: list):
+    for x, y in sudoku_matrix_generator():
+
     return
 
 
@@ -50,5 +58,6 @@ if __name__ == "__main__":
 
     possible_nr = reset_possible_numbers(board)
     pretty_print_sudoku(board)
-    check_row(board, possible_nr)
+    check_rows(board, possible_nr)
+    check_columns(board, possible_nr)
     print(possible_nr)
