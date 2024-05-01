@@ -5,7 +5,7 @@ def sudoku_matrix_generator():
 
 
 def reset_possible_numbers(grid: list):
-    return [[[1, 2, 3, 4, 5, 6, 7, 8, 9] if grid[y][x] == 0 else [] for y in range(0, 9)] for x in range(0, 9)]
+    return [[[1, 2, 3, 4, 5, 6, 7, 8, 9] if grid[y][x] == 0 else [] for x in range(0, 9)] for y in range(0, 9)]
 
 
 def pretty_print_sudoku(grid: list) -> None:
@@ -32,5 +32,5 @@ if __name__ == "__main__":
             [9, 0, 0, 8, 0, 4, 0, 3, 0],
             [6, 0, 0, 3, 0, 1, 0, 0, 0]]
 
-    reset_possible_numbers(grid)
+    grid = reset_possible_numbers(grid)
     pretty_print_sudoku(grid)
