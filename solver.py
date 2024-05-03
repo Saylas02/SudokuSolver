@@ -95,6 +95,8 @@ def solve(grid: list):
         count += 1
     print(f"Solved with {count} iterations")
 
+    return grid
+
 
 if __name__ == "__main__":
     board = [[1, 0, 0, 6, 4, 5, 9, 0, 0],
