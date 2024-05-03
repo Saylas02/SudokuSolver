@@ -1,10 +1,10 @@
-def sudoku_matrix_generator():
+def sudoku_matrix_generator() -> tuple:
     for y in range(9):
         for x in range(9):
             yield y, x
 
 
-def reset_possible_numbers(grid: list):
+def reset_possible_numbers(grid: list) -> list:
     return [[[1, 2, 3, 4, 5, 6, 7, 8, 9] if grid[y][x] == 0 else [] for x in range(0, 9)] for y in range(0, 9)]
 
 
@@ -15,20 +15,18 @@ def check_rows(grid: list, arr_pos_nr: list):
         for i in range(9):
             if grid[y][i] != 0 and grid[y][i] in arr_pos_nr[y][x]:
                 arr_pos_nr[y][x].remove(grid[y][i])
-    return
 
 
-def check_columns(grid: list, arr_pos_nr: list):
+def check_columns(grid: list, arr_pos_nr: list) -> None:
     for y, x in sudoku_matrix_generator():
         if grid[y][x] != 0:
             continue
         for i in range(9):
             if grid[i][x] != 0 and grid[i][x] in arr_pos_nr[y][x]:
                 arr_pos_nr[y][x].remove(grid[i][x])
-    return
 
 
-def check_blocks(grid: list, arr_pos_nr: list):
+def check_blocks(grid: list, arr_pos_nr: list) -> None:
     block_coordinates = {
         (0, 0): [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)],
         (0, 1): [(0, 3), (0, 4), (0, 5), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)],
@@ -52,7 +50,7 @@ def check_blocks(grid: list, arr_pos_nr: list):
     return
 
 
-def set_single_possible_number(grid: list, possible_nr: list):
+def set_single_possible_number(grid: list, possible_nr: list) -> None:
     for y, x in sudoku_matrix_generator():
         if grid[y][x] != 0:
             continue
@@ -81,7 +79,7 @@ def is_solved(grid: list) -> bool:
     return True
 
 
-def solve(grid: list):
+def solve(grid: list) -> list:
     pretty_print_sudoku(grid)
     count = 1
     while not is_solved(grid):
