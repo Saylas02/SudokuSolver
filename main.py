@@ -1,21 +1,33 @@
-import json
 import time
-import requests
-import selenium
 from selenium import webdriver
-from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
-from time import sleep
 
 
-def get_data_from_website(website: str):
-    """Get Data (Sudoku Grid values) from website
-    #TODO: setup accept cookie popup
-    website = "https://sudoku.zeit.de/"
-    # chrome_path = 'C:\Program Files\Google\Chrome\Application'
+def get_data_from_website():
+    website = "https://sudoku.tagesspiegel.de/"
     driver = webdriver.Chrome()
     driver.get(website)
-    time.sleep(5)
-    elem = driver.find_element(By.XPATH, '//*[@id="notice"]/div[4]/div[1]/button').click()
-    """
-    return True
+
+    time.sleep(2)
+
+    values = []
+    for square in range(1, 82):
+        elements = driver.find_element(By.XPATH, f'// *[ @ id = "game-square"] / div[{square}]').text
+        if elements == '':
+            values.append(0)
+        else:
+            values.append(int(elements))
+
+    grid, depth = [[], [], [], [], [], [], [], [], []], 0
+    for count, elements in enumerate(values):
+        if count % 9 == 0:
+            depth += 1
+            grid[depth-1].append(elements)
+        else:
+            grid[depth-1].append(elements)
+
+    print(grid)
+
+
+if __name__ == "__main__":
+    get_data_from_website()
