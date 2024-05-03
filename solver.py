@@ -79,6 +79,13 @@ def is_solved(grid: list) -> bool:
     return True
 
 
+def export_grid(grid: list) -> list:
+    arr_export_grid = []
+    for y, x in sudoku_matrix_generator():
+        arr_export_grid.append(grid[y][x])
+    return arr_export_grid
+
+
 def solve(grid: list) -> list:
     pretty_print_sudoku(grid)
     count = 1
@@ -92,7 +99,7 @@ def solve(grid: list) -> list:
         pretty_print_sudoku(grid)
         count += 1
     print(f"Solved with {count} iterations")
-
+    grid = export_grid(grid)
     return grid
 
 

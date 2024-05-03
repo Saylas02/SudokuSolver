@@ -2,13 +2,13 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
+import solver
 
-def get_data_from_website():
+
+def main():
     website = "https://sudoku.tagesspiegel.de/"
     driver = webdriver.Chrome()
     driver.get(website)
-
-    time.sleep(2)
 
     values = []
     for square in range(1, 82):
@@ -26,8 +26,17 @@ def get_data_from_website():
         else:
             grid[depth-1].append(elements)
 
-    print(grid)
+    solved_grid = solver.solve(grid)
+
+
+#TODO: setup push entries to cell
+"""
+    for square, entries in enumerate(solved_grid):
+        print(square+1, entries)
+        elements = driver.find_element(By.XPATH, f'// *[ @ id = "game-square"] / div[{square+1}]')
+        elements.send_keys(entries)
+"""
 
 
 if __name__ == "__main__":
-    get_data_from_website()
+    main()
