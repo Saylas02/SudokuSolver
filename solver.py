@@ -76,6 +76,7 @@ def check_unions(grid: list, possible_nr: list):
                 if l in possible_nr[y][x]:
                     possible_nr[y][x].remove(l)
 
+
 def set_single_possible_number(grid: list, possible_nr: list):
     for y, x in sudoku_matrix_generator():
         if grid[y][x] != 0:
@@ -107,8 +108,8 @@ def is_solved(grid: list) -> bool:
 
 def solve(grid: list):
     pretty_print_sudoku(grid)
-    count = 1
-    while not is_solved(grid):
+    count, maxIters = 1, 100
+    while not is_solved(grid) and count < maxIters:
         #Reset Setup
         possible_nr = reset_possible_numbers(grid)
         
@@ -129,15 +130,13 @@ def solve(grid: list):
     print(f"Solved with {count-1} iterations")
 
 
-if __name__ == "__main__":
-    board = [[3,4,5,0,0,0,0,0,8],
-             [6,1,0,0,8,3,5,4,9],
-             [7,9,0,0,4,5,0,0,6],
-             [0,0,0,1,5,7,0,0,0],
-             [0,0,0,0,6,4,9,0,0],
-             [0,7,1,9,0,0,4,0,0],
-             [0,0,9,0,2,0,6,0,4],
-             [0,5,0,0,1,0,0,0,0],
-             [2,0,6,0,0,0,3,0,0]]
+def string_to_grid(sudoku_str : str) -> list:
+    grid = [[0]*9 for _ in range(9)]
+    for y,x in sudoku_matrix_generator():
+        grid[y][x] = int(sudoku_str[y*9+x])
+    return grid
 
+
+if __name__ == "__main__":
+    board = string_to_grid("000000008309806120000153940500260370003008500401007090600300000900040000872000010")
     solve(board)
