@@ -1,14 +1,22 @@
 import time
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-
+from selenium.webdriver.common.keys import Keys
 import solver
 
 
 def main():
-    website = "https://sudoku.tagesspiegel.de/"
+    website = "https://sudoku.tagesspiegel.de/mittel"
     driver = webdriver.Chrome()
     driver.get(website)
+
+    time.sleep(3)
+
+    cookie_iframe = driver.find_element(By.XPATH, '/html/body/div[2]/iframe')
+    driver.switch_to.frame(cookie_iframe)
+    driver.find_element(By.XPATH, '/html/body/div/div[2]/div[3]/div[1]/div/button').click()
+    driver.switch_to.parent_frame()
 
     values = []
     for square in range(1, 82):
@@ -28,14 +36,11 @@ def main():
 
     solved_grid = solver.solve(grid)
 
-
-#TODO: setup push entries to cell
-"""
     for square, entries in enumerate(solved_grid):
-        print(square+1, entries)
-        elements = driver.find_element(By.XPATH, f'// *[ @ id = "game-square"] / div[{square+1}]')
-        elements.send_keys(entries)
-"""
+        square_element = driver.find_element(By.XPATH, f'//*[@id="game-square"]/div[{square+1}]/div')
+        square_element.click()
+        actions = ActionChains(driver)
+        actions.send_keys(entries).perform()
 
 
 if __name__ == "__main__":
