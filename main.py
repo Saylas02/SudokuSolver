@@ -2,7 +2,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 import solver
 
 
@@ -36,9 +35,7 @@ def main():
 
     solved_grid = solver.solve(grid)
 
-#TODO: setup iteration over given fields
     for square, entries in enumerate(solved_grid):
-        print(square+1, entries)
         square_element = driver.find_element(By.XPATH, f'//*[@id="game-square"]/div[{square+1}]/div')
         if square_element.text != '':
             continue
