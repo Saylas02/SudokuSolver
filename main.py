@@ -10,7 +10,7 @@ def main():
     driver = webdriver.Chrome()
     driver.get(website)
 
-    time.sleep(3)
+    time.sleep(1.5)
 
     cookie_iframe = driver.find_element(By.XPATH, '/html/body/div[2]/iframe')
     driver.switch_to.frame(cookie_iframe)
