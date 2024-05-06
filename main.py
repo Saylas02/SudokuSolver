@@ -36,6 +36,7 @@ def main():
 
     solved_grid = solver.solve(grid)
 
+#TODO: setup iteration over given fields
     for square, entries in enumerate(solved_grid):
         square_element = driver.find_element(By.XPATH, f'//*[@id="game-square"]/div[{square+1}]/div')
         square_element.click()
