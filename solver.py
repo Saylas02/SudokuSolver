@@ -87,7 +87,7 @@ def export_grid(grid: list) -> list:
 
 
 def check_for_single_possible_number(possible_nr: list) -> list:
-
+    #TODO: check possible_nr for single entrie in column, row, block
     return
 
 
