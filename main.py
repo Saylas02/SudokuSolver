@@ -38,10 +38,16 @@ def main():
 
 #TODO: setup iteration over given fields
     for square, entries in enumerate(solved_grid):
+        print(square+1, entries)
         square_element = driver.find_element(By.XPATH, f'//*[@id="game-square"]/div[{square+1}]/div')
-        square_element.click()
-        actions = ActionChains(driver)
-        actions.send_keys(entries).perform()
+        if square_element.text != '':
+            continue
+        else:
+            square_element.click()
+            actions = ActionChains(driver)
+            actions.send_keys(entries).perform()
+
+    time.sleep(15)
 
 
 if __name__ == "__main__":
