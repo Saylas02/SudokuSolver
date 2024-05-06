@@ -86,6 +86,11 @@ def export_grid(grid: list) -> list:
     return arr_export_grid
 
 
+def check_for_single_possible_number(possible_nr: list) -> list:
+
+    return
+
+
 def solve(grid: list) -> list:
     pretty_print_sudoku(grid)
     count = 1
