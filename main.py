@@ -37,6 +37,7 @@ def main():
 
     for square, entries in enumerate(solved_grid):
         square_element = driver.find_element(By.XPATH, f'//*[@id="game-square"]/div[{square+1}]/div')
+        #TODO: mark given elemtes with flag, performance boost
         if square_element.text != '':
             continue
         else:
